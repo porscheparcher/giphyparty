@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Giphy Party!</title>
+</head>
+
+<body>
+  <form>
+    <input id="searchWord"  type="text" placeholder="Search">
+    <input type="submit" value="submit">
+    
+  </form>
+  <div id="container"></div>
+  <button id="removeGif">Remove</button>
+
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="app.js"></script>
+
+<script>
+  function formSubmit (event) {
+    event.preventDefault();
+    const searchWord = document.getElementById('searchWord').value
+    const apiLink = `https://giphy.com/search/hilarious`;
+    axios.get(apiLink)
+      .then(response => {
+        console.log(response.data);
+        const gifUrl = response.data.data[0].images.original.url;
+        const gifImg = document.createElement('img');
+        gifImg.src = gifUrl;
+
+document.getElementById('container').appendChild(gifImg);
+      });
+      .catch(error => {
+        console.error(error);
+      })
+  };
+
+  document.getElementById('searchWord').addEventListener('submit', formSubmit);
+  console.log('request was sent');
+
+
+
+
+</script>
+</body>
+
+</html>
